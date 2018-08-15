@@ -16,8 +16,8 @@ public class DataSourceConfig {
     @Autowired
     private DataSourceProperties dataSourceProperties;
 
-    @Bean
-    public DataSource dataSource() {
+    @Bean(destroyMethod = "postDeregister")
+    public BasicDataSource dataSource() {
         log.info("datasource properties : {}", dataSourceProperties.toString());
         BasicDataSource dataSource = new BasicDataSource();
 
