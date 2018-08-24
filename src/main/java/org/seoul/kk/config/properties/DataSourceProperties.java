@@ -5,11 +5,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
 @Configuration
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "bbkk.datasource")
-@PropertySource(value = { "classpath:/db/db.properties" })
+@PropertySources(value = {
+        @PropertySource(value = { "classpath:/db/db.properties" }),
+        @PropertySource(value = { "classpath:/db/db-${spring.profiles.active}.properties" }, ignoreResourceNotFound = true),
+})
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

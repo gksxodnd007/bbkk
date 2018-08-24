@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: default
+logging:
+  level:
+    root: debug
+
+---
+
+spring:
+  profiles: dev
+logging:
+  level:
+    root: info
+
+---
+
+spring:
+  profiles: test
+logging:
+  level:
+    root: debug
+  level.org.hibernate:
+    SQL: debug
+    type.descriptor.sql.BasicBinder: trace

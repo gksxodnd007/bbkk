@@ -14,12 +14,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @RestController
-public class HealthChecker {
+public class HealthCheckerController {
 
     private HealthCheckDto healthCheckDto;
 
     @Autowired
-    public HealthChecker(ResourceLoader resourceLoader) {
+    public HealthCheckerController(ResourceLoader resourceLoader) {
         Resource resource = resourceLoader.getResource("classpath:health-check.txt");
         BufferedReader bufferedReader;
         try {
