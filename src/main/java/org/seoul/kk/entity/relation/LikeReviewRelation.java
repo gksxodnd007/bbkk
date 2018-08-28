@@ -18,11 +18,11 @@ public class LikeReviewRelation {
 
     @ManyToOne
     @JoinColumn(name = "traveler_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
-    private Traveler travelerId;
+    private Traveler traveler;
 
     @ManyToOne
     @JoinColumn(name = "review_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
-    private Review reviewId;
+    private Review review;
 
     @Column(name = "like_at")
     private LocalDateTime likeAt;

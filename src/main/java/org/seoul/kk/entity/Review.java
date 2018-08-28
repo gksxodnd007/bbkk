@@ -19,7 +19,7 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "play_land_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
-    private  PlayLand playLandId;
+    private  PlayLand playLand;
 
     @Column(name = "like_cnt")
     private Long likeCnt;

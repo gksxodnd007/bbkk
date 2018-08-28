@@ -16,11 +16,11 @@ public class LikePlayLandRelation {
 
     @ManyToOne
     @JoinColumn(name = "playland_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
-    private PlayLand playLandId;
+    private PlayLand playLand;
 
     @ManyToOne
     @JoinColumn(name = "traveler_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
-    private Traveler travelerId;
+    private Traveler traveler;
 
     @Column(name = "like_at")
     private LocalDateTime likeAt;

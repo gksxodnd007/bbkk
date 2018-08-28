@@ -41,12 +41,12 @@ public class Traveler {
 
     public void addBookMark(BookMark bookMark) {
         this.bookMarks.add(bookMark);
-        bookMark.setTravelerId(this);
+        bookMark.setTraveler(this);
     }
 
     public void removeBookMark(BookMark bookMark) {
         this.bookMarks.remove(bookMark);
-        bookMark.setTravelerId(this);
+        bookMark.setTraveler(this);
     }
 
     @PrePersist

@@ -17,6 +17,10 @@ public class PlayLand {
     @Column(name = "title")
     private String title;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "traveler_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
+    private Traveler traveler;
+
     @Column(name = "content")
     private String content;
 

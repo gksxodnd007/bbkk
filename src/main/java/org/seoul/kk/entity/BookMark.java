@@ -16,11 +16,11 @@ public class BookMark {
 
     @ManyToOne
     @JoinColumn(name = "traveler_id" , foreignKey = @ForeignKey(name = "none"))
-    private Traveler travelerId;
+    private Traveler traveler;
 
     @ManyToOne
     @JoinColumn(name = "playland_id", foreignKey = @ForeignKey(name = "none"))
-    private PlayLand playLandId;
+    private PlayLand playLand;
 
     @Column(name = "mark_at")
     private LocalDateTime markAt;
