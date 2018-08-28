@@ -44,6 +44,12 @@ public class PlayLand {
         LocalDateTime now = LocalDateTime.now();
         this.createdAt = now;
         this.updatedAt = now;
+        this.likeCnt = 0L;
+    }
+
+    @PostUpdate
+    public void onUpdateEntity() {
+        this.updatedAt = LocalDateTime.now();
     }
 
 }

@@ -24,12 +24,22 @@ public class Review {
     @Column(name = "like_cnt")
     private Long likeCnt;
 
-    @Column(name = "like_at")
-    private LocalDateTime likeAt;
+    @Column(name = "review_at")
+    private LocalDateTime reviewAt;
+
+    @Column(name = "update_at")
+    private LocalDateTime updatedAt;
 
     @PrePersist
     public void onInitEntity() {
-        this.likeAt = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
+        this.reviewAt = now;
+        this.updatedAt = now;
+    }
+
+    @PostUpdate
+    public void onUpdateEntity() {
+        this.updatedAt = LocalDateTime.now();
     }
 
 }

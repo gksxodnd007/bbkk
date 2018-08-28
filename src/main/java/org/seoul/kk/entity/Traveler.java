@@ -56,4 +56,9 @@ public class Traveler {
         this.updatedAt = now;
     }
 
+    @PostUpdate
+    public void onUpdateEntity() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
 }
