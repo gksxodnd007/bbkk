@@ -33,7 +33,7 @@ public class Traveler {
     private TravelProperty travelProperty;
 
     //TODO foreign key 제약 해제 하는 방법을 찾아봅니다.
-    @OneToMany(mappedBy = "travelerId",
+    @OneToMany(mappedBy = "traveler",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @NotFound(action = NotFoundAction.IGNORE)
