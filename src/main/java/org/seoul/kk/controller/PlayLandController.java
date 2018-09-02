@@ -30,7 +30,7 @@ public class PlayLandController {
         this.travelerService = travelerService;
     }
 
-    //TODO Multipart 이용해야합니다.
+    //TODO 이미지 5장 초과시
     @PostMapping(value = "/v1/register/playland", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void registerPlayLand(@Valid @RequestBody RegisterPlayLandDto requestBody,
                                  BindingResult bindingResult) {
@@ -40,6 +40,10 @@ public class PlayLandController {
 
         if (!isBase64Encoded(requestBody.getImages())) {
             throw new BadRequestException("이미지가 base64로 인코딩 되지않았습니다.");
+        }
+
+        if (requestBody.getImages().split(",").length > 5) {
+            throw new BadRequestException("이미지를 5장이상 업로드 할 수 없습니다.");
         }
 
         Traveler traveler = travelerService.getTravelerById(requestBody.getTravelerId()).orElseThrow(NotFoundTraveler::new);
