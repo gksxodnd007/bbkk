@@ -1,6 +1,6 @@
 package org.seoul.kk.exception;
 
-public class BaseException extends RuntimeException {
+class BaseException extends RuntimeException {
 
     protected ErrorModel error;
 

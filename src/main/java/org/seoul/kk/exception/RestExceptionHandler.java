@@ -26,6 +26,7 @@ public class RestExceptionHandler {
 
     }
 
+    //TODO exception.printStackStrace()를 통해 출력되는 에러 로그를 콘솔이 아닌 파일로 남겨야합니다.
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<ErrorModel> unhandledExceptionHandler(RuntimeException exception) {
         log.error("unhandledException occur : {}", exception.getMessage());
