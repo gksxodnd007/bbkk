@@ -20,6 +20,8 @@ public class RestExceptionHandler {
         switch (error.getCode()) {
             case 400:
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+            case 4004:
+                return ResponseEntity.status(HttpStatus.OK).body(error);
             default:
                 throw new RuntimeException();
         }
