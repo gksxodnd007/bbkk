@@ -6,6 +6,10 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.AccessControlList;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.google.errorprone.annotations.DoNotCall;
 import lombok.extern.slf4j.Slf4j;
 import org.seoul.kk.config.properties.S3Properties;
@@ -36,7 +40,9 @@ public class AwsS3Service {
     public String uploadFile(String key, File file) {
         try {
             log.info("upload file to aws s3 bucketName: {}, key: {}", s3Properties.getBucketName(), key);
-            s3Client.putObject(s3Properties.getBucketName(), key, file);
+            PutObjectRequest objectRequest = new PutObjectRequest(s3Properties.getBucketName(), key, file);
+            objectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
+            s3Client.putObject(objectRequest);
         } catch (SdkClientException e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
