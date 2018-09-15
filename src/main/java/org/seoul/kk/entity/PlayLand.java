@@ -1,7 +1,7 @@
 package org.seoul.kk.entity;
 
-import lombok.Builder;
 import lombok.Data;
+import org.seoul.kk.entity.constant.Season;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,6 +17,10 @@ public class PlayLand {
 
     @Column(name = "title")
     private String title;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "season", nullable = false)
+    private Season season;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "traveler_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
