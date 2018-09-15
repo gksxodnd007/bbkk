@@ -30,7 +30,8 @@ public class PlayLandController {
         this.travelerService = travelerService;
     }
 
-    //TODO 이미지 5장 초과시
+    //TODO split 관련 메서드를 좀 더 효율적으로 처리해야합니다.
+    //TODO Access-Token 관련 처리가 필요합니다.(aop)
     @PostMapping(value = "/v1/register/playland", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void registerPlayLand(@Valid @RequestBody RegisterPlayLandDto requestBody,
                                  BindingResult bindingResult) {
