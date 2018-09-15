@@ -1,5 +1,6 @@
 package org.seoul.kk.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.seoul.kk.entity.constant.Season;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 @Entity
 @Table(name = "TB_PLAYLAND")
 public class PlayLand {

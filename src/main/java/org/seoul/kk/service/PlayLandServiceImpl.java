@@ -40,12 +40,13 @@ public class PlayLandServiceImpl implements PlayLandService {
     public void registerPlayLand(RegisterPlayLandDto registerPlayLandDto, Traveler traveler) {
         Season season = Season.valueOf(registerPlayLandDto.getSeason());
 
-        PlayLand playLand = new PlayLand();
-        playLand.setTraveler(traveler);
-        playLand.setTitle(registerPlayLandDto.getTitle());
-        playLand.setContent(registerPlayLandDto.getContent());
-        playLand.setSeason(season);
-        playLand.setPosition(playLand.getPosition());
+        PlayLand playLand = PlayLand.builder()
+                .traveler(traveler)
+                .title(registerPlayLandDto.getTitle())
+                .content(registerPlayLandDto.getContent())
+                .season(season)
+                .position(registerPlayLandDto.getPosition())
+                .build();
 
         List<String> uploadResults = uploadPlayLandImageS3(registerPlayLandDto.getImages(), registerPlayLandDto.getTitle(), season, traveler.getId());
         StringBuilder sb = new StringBuilder();
