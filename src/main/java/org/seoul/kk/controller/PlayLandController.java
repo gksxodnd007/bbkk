@@ -3,6 +3,7 @@ package org.seoul.kk.controller;
 import org.apache.commons.codec.binary.Base64;
 import org.seoul.kk.dto.RegisterPlayLandDto;
 import org.seoul.kk.entity.Traveler;
+import org.seoul.kk.entity.constant.Season;
 import org.seoul.kk.exception.BadRequestException;
 import org.seoul.kk.exception.NotFoundTraveler;
 import org.seoul.kk.service.PlayLandService;
@@ -30,7 +31,7 @@ public class PlayLandController {
         this.travelerService = travelerService;
     }
 
-    //TODO 이미지 5장 초과시
+    //TODO split 관련 메서드를 좀 더 효율적으로 처리해야합니다.
     @PostMapping(value = "/v1/register/playland", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void registerPlayLand(@Valid @RequestBody RegisterPlayLandDto requestBody,
                                  BindingResult bindingResult) {
@@ -45,6 +46,13 @@ public class PlayLandController {
         if (requestBody.getImages().split(",").length > 5) {
             throw new BadRequestException("이미지를 5장이상 업로드 할 수 없습니다.");
         }
+
+        try {
+            Season.valueOf(requestBody.getSeason());
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("계절 enum 값의 형식이 맞지 않습니다.");
+        }
+
 
         Traveler traveler = travelerService.getTravelerById(requestBody.getTravelerId()).orElseThrow(NotFoundTraveler::new);
         playLandService.registerPlayLand(requestBody, traveler);

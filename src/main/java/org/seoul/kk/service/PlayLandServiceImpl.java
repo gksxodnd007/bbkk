@@ -5,6 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.seoul.kk.dto.RegisterPlayLandDto;
 import org.seoul.kk.entity.PlayLand;
 import org.seoul.kk.entity.Traveler;
+import org.seoul.kk.entity.constant.Season;
 import org.seoul.kk.repository.PlayLandRepository;
 import org.seoul.kk.service.s3.AwsS3Service;
 import org.seoul.kk.util.S3KeyHelper;
@@ -37,13 +38,17 @@ public class PlayLandServiceImpl implements PlayLandService {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public void registerPlayLand(RegisterPlayLandDto registerPlayLandDto, Traveler traveler) {
-        PlayLand playLand = new PlayLand();
-        playLand.setTraveler(traveler);
-        playLand.setTitle(registerPlayLandDto.getTitle());
-        playLand.setContent(registerPlayLandDto.getContent());
-        playLand.setPosition(playLand.getPosition());
+        Season season = Season.valueOf(registerPlayLandDto.getSeason());
 
-        List<String> uploadResults = uploadPlayLandImageS3(registerPlayLandDto.getImages(), registerPlayLandDto.getTitle(), traveler.getId());
+        PlayLand playLand = PlayLand.builder()
+                .traveler(traveler)
+                .title(registerPlayLandDto.getTitle())
+                .content(registerPlayLandDto.getContent())
+                .season(season)
+                .position(registerPlayLandDto.getPosition())
+                .build();
+
+        List<String> uploadResults = uploadPlayLandImageS3(registerPlayLandDto.getImages(), registerPlayLandDto.getTitle(), season, traveler.getId());
         StringBuilder sb = new StringBuilder();
         uploadResults.forEach(elem -> sb.append(elem).append(","));
         sb.setLength(sb.length() - 1);
@@ -54,7 +59,7 @@ public class PlayLandServiceImpl implements PlayLandService {
     }
 
     //TODO 파일 업로드 결과를 제어해야합니다.
-    private List<String> uploadPlayLandImageS3(String base64EncodedData, String title, Long travelerId) {
+    private List<String> uploadPlayLandImageS3(String base64EncodedData, String title, Season season, Long travelerId) {
         List<File> files = Lists.newArrayList();
         List<String> fileUrls = Lists.newArrayList();
         String[] datas = base64EncodedData.split(",");
@@ -64,7 +69,7 @@ public class PlayLandServiceImpl implements PlayLandService {
         });
 
         files.forEach(file -> {
-            fileUrls.add(s3StorageService.uploadFile(S3KeyHelper.generateS3ObjectKey(travelerId, file.getName()), file));
+            fileUrls.add(s3StorageService.uploadFile(S3KeyHelper.generateS3ObjectKey(travelerId, season, file.getName()), file));
             file.delete();
         });
 

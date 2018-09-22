@@ -1,6 +1,9 @@
 package org.seoul.kk.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.seoul.kk.entity.constant.TravelProperty;
@@ -11,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "TB_TRAVELER")
 public class Traveler {

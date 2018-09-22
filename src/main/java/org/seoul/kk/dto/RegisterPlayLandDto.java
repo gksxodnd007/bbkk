@@ -15,6 +15,8 @@ public class RegisterPlayLandDto {
     private Long travelerId;
     @NotNull(message = "title is null")
     private String title;
+    @NotNull(message = "season is null")
+    private String season;
     @NotNull(message = "content is null")
     private String content;
     @NotNull(message = "position is null")
@@ -22,8 +24,8 @@ public class RegisterPlayLandDto {
     @NotNull(message = "images are null")
     private String images;
 
-    public static RegisterPlayLandDto newInstance(Long travelerId, String title, String content, String position, String images) {
-        return new RegisterPlayLandDto(travelerId, title, content, position, images);
+    public static RegisterPlayLandDto newInstance(Long travelerId, String title, String season, String content, String position, String images) {
+        return new RegisterPlayLandDto(travelerId, title, season, content, position, images);
     }
 
 }
