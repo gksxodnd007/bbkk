@@ -51,7 +51,9 @@ class PlayLandRepositoryTest extends SpringTestSupport {
                 .id(id)
                 .title(title)
                 .season(season)
+                .content("test content")
                 .traveler(traveler)
+                .position("test pos")
                 .build();
     }
 

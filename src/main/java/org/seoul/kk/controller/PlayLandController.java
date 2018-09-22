@@ -2,6 +2,7 @@ package org.seoul.kk.controller;
 
 import org.apache.commons.codec.binary.Base64;
 import org.seoul.kk.dto.RegisterPlayLandDto;
+import org.seoul.kk.entity.PlayLand;
 import org.seoul.kk.entity.Traveler;
 import org.seoul.kk.entity.constant.Season;
 import org.seoul.kk.exception.BadRequestException;
@@ -11,14 +12,14 @@ import org.seoul.kk.service.TravelerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping(value = "/v1/playland")
 public class PlayLandController {
 
     private final PlayLandService playLandService;
@@ -32,11 +33,11 @@ public class PlayLandController {
     }
 
     //TODO split 관련 메서드를 좀 더 효율적으로 처리해야합니다.
-    @PostMapping(value = "/v1/register/playland", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void registerPlayLand(@Valid @RequestBody RegisterPlayLandDto requestBody,
                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new BadRequestException("PlayLand를 등록시 필수 파라미터를 채워주세요");
+            throw new BadRequestException("PlayLand를 등록시 필수 파라미터를 채워주세요.");
         }
 
         if (!isBase64Encoded(requestBody.getImages())) {
@@ -58,8 +59,24 @@ public class PlayLandController {
         playLandService.registerPlayLand(requestBody, traveler);
     }
 
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public PlayLand updatePlayLand(@Valid @RequestBody PlayLand requestBody,
+                                   BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException("PlayLand를 수정시 필수 파라미터를 채워주세요.");
+        }
+
+        //TODO enum validation이 필요합니다.
+        //TODO 작성자와 수정자가 같은지 확인하는 validation이 필요합니다.
+        return playLandService.updatePlayLand(requestBody);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public void deletePlayLand(@PathVariable(name = "id") long playLandId) {
+        playLandService.deletePlayLand(playLandId);
+    }
+
     private boolean isBase64Encoded(String images) {
         return Arrays.stream(images.split(",")).allMatch(Base64::isBase64);
     }
-
 }
