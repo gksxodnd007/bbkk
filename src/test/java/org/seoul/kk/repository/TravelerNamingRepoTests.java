@@ -1,18 +1,11 @@
-package org.seoul.kk;
+package org.seoul.kk.repository;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.seoul.kk.SpringTestSupport;
 import org.seoul.kk.entity.TravelerNaming;
-import org.seoul.kk.repository.TravelerNamingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@Commit
-public class TravelerNamingTests {
+public class TravelerNamingRepoTests extends SpringTestSupport {
     @Autowired
     private TravelerNamingRepository travelerNamingRepository;
 
@@ -24,6 +17,4 @@ public class TravelerNamingTests {
         trname.setProperty("형용사1");
         travelerNamingRepository.save(trname);
     }
-
-
 }
