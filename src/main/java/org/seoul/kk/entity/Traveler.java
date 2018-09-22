@@ -28,15 +28,18 @@ public class Traveler {
     @Column(name = "nickname")
     private String nickname;
 
+    @Column(name = "uuid")
+    private String uuid;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "travel_property")
+    private TravelProperty property;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "travel_property")
-    private TravelProperty travelProperty;
 
     //TODO foreign key 제약 해제 하는 방법을 찾아봅니다.
     @OneToMany(mappedBy = "traveler",
