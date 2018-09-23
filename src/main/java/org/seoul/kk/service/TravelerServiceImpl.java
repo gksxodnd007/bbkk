@@ -1,9 +1,11 @@
 package org.seoul.kk.service;
 
 import org.seoul.kk.dto.RandomNamingReturnDto;
+import org.seoul.kk.dto.RegisterNamingSourceDto;
 import org.seoul.kk.dto.RegisterTravelerDto;
 import org.seoul.kk.entity.Traveler;
 import org.seoul.kk.entity.TravelerNaming;
+import org.seoul.kk.entity.constant.Classification;
 import org.seoul.kk.repository.TravelerNamingRepository;
 import org.seoul.kk.repository.TravelerRepository;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,22 @@ public class TravelerServiceImpl implements TravelerService {
     }
 
     @Override
+    public void registerNamingSource(RegisterNamingSourceDto namingSourceDto) {
+        System.out.println(namingSourceDto.toString());
+        TravelerNaming source =
+                TravelerNaming.builder()
+                        .classification(namingSourceDto.getClassification())
+                        .property(namingSourceDto.getProperty())
+                        .build();
+        travelerNamingRepository.save(source);
+    }
+
+    @Override
+    public Object testName() {
+        return travelerNamingRepository.findAll();
+    }
+
+    @Override
     public RandomNamingReturnDto randomNaming() {
 
         RandomNamingReturnDto response = new RandomNamingReturnDto();
@@ -36,15 +54,16 @@ public class TravelerServiceImpl implements TravelerService {
         for(int i=0;i<adjSize;i++) a_list.add(i);
         Collections.shuffle(a_list);
 
-        List<TravelerNaming> nounProperties = travelerNamingRepository.findTravelerNamingsByClassification(2);
+        List<TravelerNaming> nounProperties = travelerNamingRepository.findTravelerNamingsByClassification(Classification.NOUN);
 
         while(true){
 //            boolean nameFounded = false;
             Long adjTraget = Long.valueOf((int)a_list.get(0));
             TravelerNaming nowNamingObj= travelerNamingRepository.getOne(adjTraget);
             String usedNounList = nowNamingObj.getUsedList();
+            int noun_size= nounProperties.size();
 
-            for(int k=0;k<nounProperties.size();k++)
+            for(int k=0;k<noun_size;k++)
                 if(usedNounList.contains(nounProperties.get(k).getProperty())){
                     continue;
                     // 없어도 상관없음

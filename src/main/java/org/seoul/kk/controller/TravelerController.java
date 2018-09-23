@@ -1,11 +1,11 @@
 package org.seoul.kk.controller;
 
 import org.seoul.kk.dto.RandomNamingReturnDto;
+import org.seoul.kk.dto.RegisterNamingSourceDto;
+import org.seoul.kk.repository.TravelerNamingRepository;
 import org.seoul.kk.service.TravelerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TravelerController {
@@ -18,10 +18,21 @@ public class TravelerController {
         this.travelerService = travelerService;
     }
 
-    @GetMapping("/v1/randomNaming")
+    @GetMapping("/v1/randomnaming")
     public @ResponseBody RandomNamingReturnDto getRandomNaming(){
         return travelerService.randomNaming();
     }
+
+    // TODO remove this test code
+    @GetMapping("/v1/getname")
+    public @ResponseBody Object getAllNameSource(){
+
+        return travelerService.testName();
+    }
+
+    @PostMapping(value = "/v1/randomsource")
+    public @ResponseBody void addRandomSource(RegisterNamingSourceDto sourceDto){ travelerService.registerNamingSource(sourceDto);}
+
 
 
     /* TODO
