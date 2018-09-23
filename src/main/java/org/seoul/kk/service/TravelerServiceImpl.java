@@ -1,10 +1,11 @@
 package org.seoul.kk.service;
 
+import org.seoul.kk.dto.RegisterTravelerDto;
 import org.seoul.kk.entity.Traveler;
+import org.seoul.kk.entity.constant.TravelProperty;
+import org.seoul.kk.exception.NotFoundTraveler;
 import org.seoul.kk.repository.TravelerRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class TravelerServiceImpl implements TravelerService {
@@ -16,8 +17,23 @@ public class TravelerServiceImpl implements TravelerService {
     }
 
     @Override
-    public Optional<Traveler> getTravelerById(Long id) {
-        return travelerRepository.findById(id);
+    public Traveler getTravelerById(Long id) throws NotFoundTraveler {
+        return travelerRepository.findById(id).orElseThrow(NotFoundTraveler::new);
     }
 
+    @Override
+    public Traveler getTravelerByUuid(String uuid) throws NotFoundTraveler {
+        return travelerRepository.findByUuid(uuid).orElseThrow(NotFoundTraveler::new);
+    }
+
+    @Override
+    public Traveler registerTraveler(RegisterTravelerDto requestBody, String uuid) throws NotFoundTraveler {
+        Traveler traveler = Traveler.builder()
+                .uuid(uuid)
+                .nickname(requestBody.getNickname())
+                .property(TravelProperty.valueOf(requestBody.getProperty()))
+                .build();
+
+        return travelerRepository.save(traveler);
+    }
 }

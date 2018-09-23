@@ -6,7 +6,6 @@ import org.seoul.kk.entity.PlayLand;
 import org.seoul.kk.entity.Traveler;
 import org.seoul.kk.entity.constant.Season;
 import org.seoul.kk.exception.BadRequestException;
-import org.seoul.kk.exception.NotFoundTraveler;
 import org.seoul.kk.service.PlayLandService;
 import org.seoul.kk.service.TravelerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,7 @@ public class PlayLandController {
         }
 
 
-        Traveler traveler = travelerService.getTravelerById(requestBody.getTravelerId()).orElseThrow(NotFoundTraveler::new);
+        Traveler traveler = travelerService.getTravelerById(requestBody.getTravelerId());
         playLandService.registerPlayLand(requestBody, traveler);
     }
 

@@ -1,5 +1,6 @@
 package org.seoul.kk.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class Traveler {
     @Column(name = "nickname")
     private String nickname;
 
+    @JsonIgnore
     @Column(name = "uuid")
     private String uuid;
 
@@ -35,13 +37,16 @@ public class Traveler {
     @Column(name = "travel_property")
     private TravelProperty property;
 
+    @JsonIgnore
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     //TODO foreign key 제약 해제 하는 방법을 찾아봅니다.
+    @JsonIgnore
     @OneToMany(mappedBy = "traveler",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
