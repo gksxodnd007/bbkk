@@ -58,6 +58,20 @@ public class HibernateJpaConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
+    @Profile(value = "production")
+    @Bean(name = "jpaProperties")
+    public Properties jpaProdProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hbm2ddl.auto", "none");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.setProperty("hibernate.show_sql", Boolean.toString(false));
+        properties.setProperty("spring.jpa.hibernate.naming_strategy", "org.hibernate.cfg.EJB3NamingStrategy");
+        properties.setProperty("hibernate.connection.CharSet", "UTF-8");
+        properties.setProperty("hibernate.connection.characterEncoding", "UTF-8");
+        properties.setProperty("hibernate.connection.useUnicode", Boolean.toString(true));
+        return properties;
+    }
+
     @Profile(value = { "default", "dev" })
     @Bean(name = "jpaProperties")
     public Properties jpaDevProperties() {
