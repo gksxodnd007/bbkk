@@ -70,8 +70,11 @@ public class PlayLandServiceImpl implements PlayLandService {
         return playLandRepository.save(playLand);
     }
 
+    @Transactional
     @Override
     public void deletePlayLand(Long id) {
+        PlayLand playLand = playLandRepository.findById(id).orElseThrow(NotFoundPlayLand::new);
+        Arrays.stream(playLand.getImageUrl().split(",")).forEach(s3StorageService::deleteFile);
         playLandRepository.deleteById(id);
     }
 
