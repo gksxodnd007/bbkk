@@ -6,6 +6,7 @@ import org.seoul.kk.dto.RegisterPlayLandDto;
 import org.seoul.kk.entity.PlayLand;
 import org.seoul.kk.entity.Traveler;
 import org.seoul.kk.entity.constant.Season;
+import org.seoul.kk.exception.NotFoundPlayLand;
 import org.seoul.kk.repository.PlayLandRepository;
 import org.seoul.kk.service.s3.AwsS3Service;
 import org.seoul.kk.util.S3KeyHelper;
@@ -56,6 +57,28 @@ public class PlayLandServiceImpl implements PlayLandService {
         playLand.setImageUrl(sb.toString());
 
         playLandRepository.save(playLand);
+    }
+
+    @Override
+    public PlayLand updatePlayLand(PlayLand requestBody) {
+        PlayLand playLand = playLandRepository.findById(requestBody.getId()).orElseThrow(NotFoundPlayLand::new);
+        playLand.setTitle(requestBody.getTitle());
+        playLand.setContent(requestBody.getContent());
+        playLand.setSeason(requestBody.getSeason());
+        playLand.setPosition(requestBody.getPosition());
+
+        return playLandRepository.save(playLand);
+    }
+
+    //TODO s3에서 이미지 제거시 필요한 key값을 추출하는 로직 리팩토링이 필요합니다.
+    @Transactional
+    @Override
+    public void deletePlayLand(Long id) {
+        PlayLand playLand = playLandRepository.findById(id).orElseThrow(NotFoundPlayLand::new);
+        Arrays.stream(playLand.getImageUrl().split(","))
+                .map(e -> e.substring(45, e.length()))
+                .forEach(s3StorageService::deleteFile);
+        playLandRepository.deleteById(id);
     }
 
     //TODO 파일 업로드 결과를 제어해야합니다.

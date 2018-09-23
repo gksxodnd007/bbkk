@@ -1,5 +1,6 @@
 package org.seoul.kk.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 public class RegisterPlayLandDto {
 
     @NotNull(message = "travelerId is null")
+    @JsonProperty(value = "traveler_id")
     private Long travelerId;
     @NotNull(message = "title is null")
     private String title;
