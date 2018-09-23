@@ -70,11 +70,14 @@ public class PlayLandServiceImpl implements PlayLandService {
         return playLandRepository.save(playLand);
     }
 
+    //TODO s3에서 이미지 제거시 필요한 key값을 추출하는 로직 리팩토링이 필요합니다.
     @Transactional
     @Override
     public void deletePlayLand(Long id) {
         PlayLand playLand = playLandRepository.findById(id).orElseThrow(NotFoundPlayLand::new);
-        Arrays.stream(playLand.getImageUrl().split(",")).forEach(s3StorageService::deleteFile);
+        Arrays.stream(playLand.getImageUrl().split(","))
+                .map(e -> e.substring(45, e.length()))
+                .forEach(s3StorageService::deleteFile);
         playLandRepository.deleteById(id);
     }
 

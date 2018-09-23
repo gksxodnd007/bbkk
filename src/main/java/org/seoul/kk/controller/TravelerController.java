@@ -1,11 +1,13 @@
 package org.seoul.kk.controller;
 
+import org.seoul.kk.common.model.ApiResponseModel;
 import org.seoul.kk.dto.RegisterTravelerDto;
 import org.seoul.kk.entity.Traveler;
 import org.seoul.kk.entity.constant.TravelProperty;
 import org.seoul.kk.exception.BadRequestException;
 import org.seoul.kk.service.TravelerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +21,17 @@ public class TravelerController {
     private TravelerService travelerService;
 
     @GetMapping(value = "/confirm")
-    public Traveler confirmTraveler(@RequestHeader("uuid") String uuid) {
-        return travelerService.getTravelerByUuid(uuid);
+    public ApiResponseModel<Traveler> confirmTraveler(@RequestHeader("uuid") String uuid) {
+
+        return ApiResponseModel.<Traveler>builder()
+                .code(HttpStatus.OK.value())
+                .msg(HttpStatus.OK.getReasonPhrase())
+                .result(travelerService.getTravelerByUuid(uuid))
+                .build();
     }
 
     @PostMapping(value = "/register")
-    public Traveler registerTraveler(@RequestHeader("uuid") String uuid,
+    public ApiResponseModel<Traveler> registerTraveler(@RequestHeader("uuid") String uuid,
                                      @Valid @RequestBody RegisterTravelerDto requestBody,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -37,6 +44,10 @@ public class TravelerController {
             throw new BadRequestException("여행자 타입 enum값이 형식이 맞지 않습니다.");
         }
 
-        return travelerService.registerTraveler(requestBody, uuid);
+        return ApiResponseModel.<Traveler>builder()
+                .code(HttpStatus.OK.value())
+                .msg(HttpStatus.OK.getReasonPhrase())
+                .result(travelerService.registerTraveler(requestBody, uuid))
+                .build();
     }
 }
