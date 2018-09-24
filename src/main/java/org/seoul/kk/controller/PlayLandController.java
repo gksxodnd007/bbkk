@@ -2,6 +2,7 @@ package org.seoul.kk.controller;
 
 import org.apache.commons.codec.binary.Base64;
 import org.seoul.kk.common.model.ApiResponseModel;
+import org.seoul.kk.dto.FeedPlayLandDto;
 import org.seoul.kk.dto.RegisterPlayLandDto;
 import org.seoul.kk.entity.PlayLand;
 import org.seoul.kk.entity.Traveler;
@@ -83,6 +84,19 @@ public class PlayLandController {
                                HttpServletResponse response) {
         playLandService.deletePlayLand(playLandId);
         response.setStatus(HttpStatus.NO_CONTENT.value());
+    }
+
+    @GetMapping(value = "/feed", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ApiResponseModel<FeedPlayLandDto> feedPlanLand(@RequestParam(value = "cursor", required = false, defaultValue = "0") Long cursor,
+                                                          @RequestParam(value = "size", required = false, defaultValue = "10") Long size,
+                                                          @RequestParam(value = "rank_flag", required = false, defaultValue = "true") Boolean rankFlag,
+                                                          @RequestParam(value = "rank_data_size", required = false, defaultValue = "3") Long rankDataSize) {
+
+        return ApiResponseModel.<FeedPlayLandDto>builder()
+                .code(HttpStatus.OK.value())
+                .msg(HttpStatus.OK.getReasonPhrase())
+                .result(playLandService.feedPlayLand(cursor, size, rankFlag, rankDataSize))
+                .build();
     }
 
     private boolean isBase64Encoded(String images) {
