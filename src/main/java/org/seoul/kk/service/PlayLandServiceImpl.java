@@ -52,12 +52,12 @@ public class PlayLandServiceImpl implements PlayLandService {
                 .position(registerPlayLandDto.getPosition())
                 .build();
 
-//        List<String> uploadResults = uploadPlayLandImageS3(registerPlayLandDto.getImages(), registerPlayLandDto.getTitle(), season, traveler.getId());
-//        StringBuilder sb = new StringBuilder();
-//        uploadResults.forEach(elem -> sb.append(elem).append(","));
-//        sb.setLength(sb.length() - 1);
+        List<String> uploadResults = uploadPlayLandImageS3(registerPlayLandDto.getImages(), registerPlayLandDto.getTitle(), season, traveler.getId());
+        StringBuilder sb = new StringBuilder();
+        uploadResults.forEach(elem -> sb.append(elem).append(","));
+        sb.setLength(sb.length() - 1);
 
-        playLand.setImageUrl("test");
+        playLand.setImageUrl(sb.toString());
 
         playLandRepository.save(playLand);
     }
