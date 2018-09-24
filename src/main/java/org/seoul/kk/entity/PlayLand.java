@@ -1,6 +1,7 @@
 package org.seoul.kk.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +33,6 @@ public class PlayLand {
     @Column(name = "season", nullable = false)
     private Season season;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "traveler_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
     private Traveler traveler;
@@ -51,7 +51,7 @@ public class PlayLand {
     @Column(name = "like_cnt")
     private Long likeCnt;
 
-    @JsonIgnore
+    @JsonProperty(value = "created_at")
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
