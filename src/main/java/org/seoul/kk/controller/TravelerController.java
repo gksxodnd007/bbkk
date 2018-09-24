@@ -24,8 +24,8 @@ public class TravelerController {
     public ApiResponseModel<Traveler> confirmTraveler(@RequestHeader("uuid") String uuid) {
 
         return ApiResponseModel.<Traveler>builder()
-                .code(HttpStatus.OK.value())
-                .msg(HttpStatus.OK.getReasonPhrase())
+                .code(HttpStatus.CONFLICT.value())
+                .msg(HttpStatus.CONFLICT.getReasonPhrase())
                 .result(travelerService.getTravelerByUuid(uuid))
                 .build();
     }
