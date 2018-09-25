@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TravelerNamingRepository extends JpaRepository<TravelerNaming,Long> {
-    List<TravelerNaming> findTravelerNamingsByClassification(Classification classification);
+
+    List<TravelerNaming> findAllByClassification(Classification classification);
 
 }
