@@ -7,7 +7,6 @@ import org.seoul.kk.dto.RegisterPlayLandDto;
 import org.seoul.kk.entity.PlayLand;
 import org.seoul.kk.entity.Traveler;
 import org.seoul.kk.entity.constant.Season;
-import org.seoul.kk.exception.BadRequestException;
 import org.seoul.kk.exception.NotAcceptableException;
 import org.seoul.kk.exception.NotFoundPlayLand;
 import org.seoul.kk.repository.PlayLandRepository;
@@ -47,6 +46,7 @@ public class PlayLandServiceImpl implements PlayLandService {
         PlayLand playLand = PlayLand.builder()
                 .traveler(traveler)
                 .title(registerPlayLandDto.getTitle())
+                .category(registerPlayLandDto.getCategory())
                 .content(registerPlayLandDto.getContent())
                 .season(season)
                 .position(registerPlayLandDto.getPosition())
@@ -66,6 +66,7 @@ public class PlayLandServiceImpl implements PlayLandService {
     public PlayLand updatePlayLand(PlayLand requestBody) {
         PlayLand playLand = playLandRepository.findById(requestBody.getId()).orElseThrow(NotFoundPlayLand::new);
         playLand.setTitle(requestBody.getTitle());
+        playLand.setCategory(requestBody.getCategory());
         playLand.setContent(requestBody.getContent());
         playLand.setSeason(requestBody.getSeason());
         playLand.setPosition(requestBody.getPosition());

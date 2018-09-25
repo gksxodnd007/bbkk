@@ -29,11 +29,16 @@ public class PlayLand {
     private String title;
 
     @NotNull
+    @Column(name = "category")
+    private String category;
+
+    @NotNull
     @Enumerated(value = EnumType.STRING)
     @Column(name = "season", nullable = false)
     private Season season;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    //TODO LAZY loading으로 수정해야합니다.
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "traveler_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
     private Traveler traveler;
 
