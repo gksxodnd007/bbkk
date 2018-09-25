@@ -45,9 +45,11 @@ public class PlayLand {
     @Column(name = "position")
     private String position;
 
+    @JsonProperty(value = "image_url")
     @Column(name = "image_url")
     private String imageUrl;
 
+    @JsonProperty(value = "like_cnt")
     @Column(name = "like_cnt")
     private Long likeCnt;
 
