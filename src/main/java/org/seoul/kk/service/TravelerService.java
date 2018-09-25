@@ -1,19 +1,13 @@
 package org.seoul.kk.service;
 
-import org.seoul.kk.dto.RandomNamingReturnDto;
-import org.seoul.kk.dto.RegisterNamingSourceDto;
 import org.seoul.kk.dto.RegisterTravelerDto;
 import org.seoul.kk.entity.Traveler;
-
-import java.util.Optional;
+import org.seoul.kk.exception.NotFoundTraveler;
 
 public interface TravelerService {
 
-    void registerTraveler(RegisterTravelerDto registerInfo);
-    void registerNamingSource(RegisterNamingSourceDto namingSourceDto);
-    RandomNamingReturnDto randomNaming();
-    Optional<Traveler> getTravelerById(Long id);
-
-    Object testName();
+    Traveler getTravelerById(Long id) throws NotFoundTraveler;
+    Traveler getTravelerByUuid(String uuid) throws NotFoundTraveler;
+    Traveler registerTraveler(RegisterTravelerDto requestBody, String uuid) throws NotFoundTraveler;
 
 }

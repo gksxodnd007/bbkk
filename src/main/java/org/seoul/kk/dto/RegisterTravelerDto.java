@@ -1,15 +1,18 @@
 package org.seoul.kk.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.seoul.kk.entity.constant.TravelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+import javax.validation.constraints.NotNull;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RegisterTravelerDto {
-    private RandomNamingReturnDto namingInfo;
-    private String nickName;
-    private TravelProperty travelerProperty;
 
-
+    @NotNull
+    private String nickname;
+    @NotNull
+    private String property;
 }

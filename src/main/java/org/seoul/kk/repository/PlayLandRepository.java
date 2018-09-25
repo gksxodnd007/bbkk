@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PlayLandRepository extends JpaRepository<PlayLand, Long> {
+public interface PlayLandRepository extends JpaRepository<PlayLand, Long>, PlayLandCustomRepository {
 
     List<PlayLand> findAllByTraveler(Traveler traveler);
-
 }

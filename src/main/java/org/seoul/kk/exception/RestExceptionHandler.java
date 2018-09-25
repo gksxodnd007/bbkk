@@ -22,6 +22,8 @@ public class RestExceptionHandler {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
             case 4004:
                 return ResponseEntity.status(HttpStatus.OK).body(error);
+            case 406:
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error);
             default:
                 throw new RuntimeException();
         }

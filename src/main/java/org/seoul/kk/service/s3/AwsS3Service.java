@@ -6,9 +6,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.AccessControlList;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.google.errorprone.annotations.DoNotCall;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.Arrays;
 
 @Slf4j
 @Service
@@ -44,11 +43,21 @@ public class AwsS3Service {
             objectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
             s3Client.putObject(objectRequest);
         } catch (SdkClientException e) {
-            e.printStackTrace();
+            log.info("upload file fail : {}", Arrays.toString(e.getStackTrace()));
             throw new RuntimeException(e.getMessage());
         }
 
         return S3_HOST + "/" + s3Properties.getBucketName() + "/" + key;
+    }
+
+    public void deleteFile(String key) {
+        log.info("delete file from aws s3 bucketName: {}, key: {}", s3Properties.getBucketName(), key);
+        try {
+            s3Client.deleteObject(s3Properties.getBucketName(), key);
+        } catch (SdkClientException e) {
+            log.info("delete file fail : {}", Arrays.toString(e.getStackTrace()));
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     //TODO 업로드 완료시 까지 스레드를 block시키는 메서드를 구현합니다.

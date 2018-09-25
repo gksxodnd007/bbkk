@@ -1,5 +1,6 @@
 package org.seoul.kk.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,23 +23,30 @@ import java.util.List;
 public class Traveler {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nickname")
     private String nickname;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @JsonIgnore
+    @Column(name = "uuid")
+    private String uuid;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "travel_property")
-    private TravelProperty travelProperty;
+    private TravelProperty property;
+
+    @JsonIgnore
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @JsonIgnore
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     //TODO foreign key 제약 해제 하는 방법을 찾아봅니다.
+    @JsonIgnore
     @OneToMany(mappedBy = "traveler",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
