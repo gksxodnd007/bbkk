@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class LikePlayLandRelation {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

@@ -23,7 +23,7 @@ import java.util.List;
 public class Traveler {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nickname")
