@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface RandomNamingService {
-    Object testName();
     RandomNamingReturnDto randomNaming();
     void registerNamingSource(RegisterNamingSourceDto source);
     void registerUsedList(RandomNamingSourceDto usedListSource);

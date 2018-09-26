@@ -18,11 +18,6 @@ public class RandomNamingServiceImpl implements RandomNamingService{
     private TravelerNamingRepository travelerNamingRepository;
 
     @Override
-    public Object testName() {
-        return travelerNamingRepository.findAll();
-    }
-
-    @Override
     public void registerNamingSource(RegisterNamingSourceDto namingSourceDto) {
         System.out.println(namingSourceDto.toString());
         TravelerNaming source =
