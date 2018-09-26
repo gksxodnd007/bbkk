@@ -30,8 +30,10 @@ public class GenerateNicknameController {
                 .build();
     }
 
+    // 왜 void 가 아닌 ApiResponse를 사용하는지??
     @PostMapping(value = "/generate/source", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ApiResponseModel generateRandomSource(
+//    public ApiResponseModel generateRandomSource(
+    public void generateRandomSource(
             @Valid @RequestBody RegisterNamingSourceDto sourceDto
             ,BindingResult bindingResult
         ){
@@ -39,11 +41,11 @@ public class GenerateNicknameController {
                 throw new BadRequestException("Random source 필수 파라미터를 채워주세요");
             }
             randomNamingService.registerNamingSource(sourceDto);
-            return ApiResponseModel.builder()
-                    .code(HttpStatus.OK.value())
-                    .msg(HttpStatus.OK.getReasonPhrase())
-                    .result("")
-                    .build();
+//            return ApiResponseModel.builder()
+//                    .code(HttpStatus.OK.value())
+//                    .msg(HttpStatus.OK.getReasonPhrase())
+//                    .result("OK")
+//                    .build();
     }
 
 

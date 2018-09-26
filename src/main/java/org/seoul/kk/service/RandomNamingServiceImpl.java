@@ -6,8 +6,10 @@ import org.seoul.kk.dto.RandomNamingReturnDto;
 import org.seoul.kk.dto.RegisterNamingSourceDto;
 import org.seoul.kk.entity.TravelerNaming;
 import org.seoul.kk.entity.constant.Classification;
+import org.seoul.kk.exception.ErrorModel;
 import org.seoul.kk.repository.TravelerNamingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +32,15 @@ public class RandomNamingServiceImpl implements RandomNamingService{
 
     @Override
     public void registerUsedList(RandomNamingSourceDto usedListSource) {
+        TravelerNaming travelerNaming = travelerNamingRepository.getOne(usedListSource.getAdjId());
+        String usedNounList = travelerNaming.getUsedList();
 
+        if(usedNounList.contains(usedListSource.getNounProperty()))
+            throw new BaseException("이미 사용된 형용사 명사 조합입니다.");
+
+        String newUsedNounList = usedNounList.concat(" " + usedListSource.getNounProperty());
+        travelerNaming.setUsedList(newUsedNounList);
+        travelerNamingRepository.save(travelerNaming);
 
     }
 
@@ -68,12 +78,18 @@ public class RandomNamingServiceImpl implements RandomNamingService{
                     // 사용된 명사 목록에 포함 현재 명사가 포함되어 있다면 다음 명사로 넘어감
                     continue;
                 }else{
-                    // 만약 포함되어 있지 않은 경우
-                    RandomNamingReturnDto response =
-                            RandomNamingReturnDto.builder()
+                    // 만약 포함되어 있지 않은 경우 리턴한다.
+
+                    RandomNamingSourceDto randomNamingSourceDto =
+                            RandomNamingSourceDto.builder()
                                 .adjId(nowNamingObj.getId())
                                 .adjProperty(nowNamingObj.getProperty())
                                 .nounProperty(nounProperties.get(k).getProperty())
+                            .build();
+
+                    RandomNamingReturnDto response =
+                            RandomNamingReturnDto.builder()
+                                .randomNamingSourceDto(randomNamingSourceDto)
                                 .nickName(nowNamingObj.getProperty() + " " + nounProperties.get(k).getProperty())
                                 .build();
 

@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 public class RegisterTravelerDto {
 
     @NotNull
+    private RandomNamingSourceDto randomNamingSourceDto;
+    @NotNull
     private String nickname;
     @NotNull
     private String property;
