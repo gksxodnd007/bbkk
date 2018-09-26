@@ -15,4 +15,5 @@ public class RegisterTravelerDto {
     private String nickname;
     @NotNull
     private String property;
+
 }
