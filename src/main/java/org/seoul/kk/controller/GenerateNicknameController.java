@@ -1,8 +1,8 @@
 package org.seoul.kk.controller;
 
 import org.seoul.kk.common.model.ApiResponseModel;
+import org.seoul.kk.dto.RandomNamingReturnDto;
 import org.seoul.kk.dto.RegisterNamingSourceDto;
-import org.seoul.kk.dto.TempNickname;
 import org.seoul.kk.exception.BadRequestException;
 import org.seoul.kk.service.RandomNamingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +22,16 @@ public class GenerateNicknameController {
 
 
     @GetMapping(value = "/generate/nickname")
-    public ApiResponseModel<TempNickname> generateNicknameTemp() {
-        return ApiResponseModel.<TempNickname>builder()
+    public ApiResponseModel<RandomNamingReturnDto> generateNicknameTemp() {
+        return ApiResponseModel.<RandomNamingReturnDto>builder()
                 .code(HttpStatus.OK.value())
                 .msg(HttpStatus.OK.getReasonPhrase())
-                .result(new TempNickname("코딩하는 오징어"))
+                .result(randomNamingService.randomNaming())
                 .build();
     }
 
     @PostMapping(value = "/generate/source", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void generateRandomSource(
+    public ApiResponseModel generateRandomSource(
             @Valid @RequestBody RegisterNamingSourceDto sourceDto
             ,BindingResult bindingResult
         ){
@@ -39,7 +39,13 @@ public class GenerateNicknameController {
                 throw new BadRequestException("Random source 필수 파라미터를 채워주세요");
             }
             randomNamingService.registerNamingSource(sourceDto);
+            return ApiResponseModel.builder()
+                    .code(HttpStatus.OK.value())
+                    .msg(HttpStatus.OK.getReasonPhrase())
+                    .result("")
+                    .build();
     }
+
 
 //    @PostMapping(value = "/v1/randomsource", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 //    public @ResponseBody

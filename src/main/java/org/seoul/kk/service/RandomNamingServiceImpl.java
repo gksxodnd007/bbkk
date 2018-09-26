@@ -1,13 +1,12 @@
 package org.seoul.kk.service;
 
 import com.amazonaws.services.cloudsearchv2.model.BaseException;
+import org.seoul.kk.dto.RandomNamingSourceDto;
 import org.seoul.kk.dto.RandomNamingReturnDto;
 import org.seoul.kk.dto.RegisterNamingSourceDto;
-import org.seoul.kk.dto.RegisterTravelerDto;
 import org.seoul.kk.entity.TravelerNaming;
 import org.seoul.kk.entity.constant.Classification;
 import org.seoul.kk.repository.TravelerNamingRepository;
-import org.seoul.kk.repository.TravelerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -34,28 +33,36 @@ public class RandomNamingServiceImpl implements RandomNamingService{
         travelerNamingRepository.save(source);
     }
 
+    @Override
+    public void registerUsedList(RandomNamingSourceDto usedListSource) {
+
+
+    }
 
     @Override
     public RandomNamingReturnDto randomNaming() {
 
-        // 명사 형용사 기준으로 리스트를 구분합니다.
+        // 명사 형용사 기준으로 리스트를 나눔
         List<TravelerNaming> adjProperties = new ArrayList<>();
         List<TravelerNaming> nounProperties = new ArrayList<>();
+        // 랜덤하게 주어질 아이디 리스트
+        List<Long> adj_PK_list = new ArrayList<>();
+
         travelerNamingRepository.findAll().forEach(namingSource->{
-            if(namingSource.getClassification() == Classification.ADJECTIVE)
+            if(namingSource.getClassification() == Classification.ADJECTIVE){
                 adjProperties.add(namingSource);
-            else
+                adj_PK_list.add(namingSource.getId());
+            }else
                 nounProperties.add(namingSource);
         });
 
-        // 형용사 기준으로 랜덤하게 줘야 할 형용사 리스트를 만들어 놓습니다.
-        List<Integer> a_list = new ArrayList<>();
-        for(int i=0;i<adjProperties.size();i++) a_list.add(i);
-        Collections.shuffle(a_list);
+        // 랜덤성을 위해서 suffle 을 사용
+        Collections.shuffle(adj_PK_list);
 
         while(true){
+            // 형용사 리스트의 첫번째를 기준으로 루프가 돌아간다.
+            Long adjTraget = Long.valueOf(adj_PK_list.get(0));
 
-            Long adjTraget = Long.valueOf((int)a_list.get(0));
             TravelerNaming nowNamingObj= travelerNamingRepository.getOne(adjTraget);
             String usedNounList = nowNamingObj.getUsedList();
             int noun_size= nounProperties.size();
@@ -81,34 +88,12 @@ public class RandomNamingServiceImpl implements RandomNamingService{
                     return response;
                 }
 
-            if(a_list.size() == 0) {
+            if(adj_PK_list.size() == 0)
                 throw new BaseException("사용할 수 있는 조합이 더이상 없습니다.");
-            }
 
-            // 다음 형용사 기준 조합을 생각해야함
-            a_list.remove(0);
+            // 다음 형용사 기준 조합을 생각해야함 , 사용한 형용사는 지운다.
+            adj_PK_list.remove(0);
         }
     }
 
-
-//    @Override
-//    public void registerTraveler(RegisterTravelerDto registerInfo) {
-//
-//        TravelerNaming adjective = travelerNamingRepository.getOne(registerInfo.getNamingInfo().adjId);
-//        String usedList = adjective.getUsedList();
-//        if(!usedList.contains(registerInfo.getNamingInfo().getNounProperty())) {
-//            //create!
-//            String newUsedList = usedList.concat(" ").concat(registerInfo.getNamingInfo().getNounProperty());
-//            adjective.setUsedList(newUsedList);
-//
-//            travelerNamingRepository.save(adjective);
-//
-//        }else{
-//            // throw Error
-//            // 방금 누가 선취함!
-//
-//        }
-//
-//
-//    }
 }

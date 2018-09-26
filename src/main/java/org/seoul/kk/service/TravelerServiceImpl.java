@@ -35,6 +35,10 @@ public class TravelerServiceImpl implements TravelerService {
 
     @Override
     public Traveler registerTraveler(RegisterTravelerDto requestBody, String uuid) throws NotFoundTraveler {
+
+        // 사용한 naming source를 usedList에 등록합니다.
+        // RandomNamingService.registerUsedList()
+
         Traveler traveler = Traveler.builder()
                 .uuid(uuid)
                 .nickname(requestBody.getNickname())
