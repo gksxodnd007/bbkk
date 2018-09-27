@@ -1,4 +1,4 @@
-package org.seoul.kk.dto;
+package org.seoul.kk.dto.traveler;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
