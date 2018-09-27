@@ -2,8 +2,8 @@ package org.seoul.kk.service;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.codec.binary.Base64;
-import org.seoul.kk.dto.FeedPlayLandDto;
-import org.seoul.kk.dto.RegisterPlayLandDto;
+import org.seoul.kk.dto.playland.FeedPlayLandDto;
+import org.seoul.kk.dto.playland.RegisterPlayLandDto;
 import org.seoul.kk.entity.PlayLand;
 import org.seoul.kk.entity.Traveler;
 import org.seoul.kk.entity.constant.Season;
@@ -96,7 +96,7 @@ public class PlayLandServiceImpl implements PlayLandService {
             throw new NotAcceptableException();
         }
 
-        if (playLands.size() == size) {
+        if (playLands.size() == size && playLands.size() != totalSize ) {
             nextCursor += playLands.size();
         }
 
