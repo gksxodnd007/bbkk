@@ -1,4 +1,4 @@
-package org.seoul.kk.dto;
+package org.seoul.kk.dto.playland;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

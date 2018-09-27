@@ -1,7 +1,7 @@
 package org.seoul.kk.service;
 
-import org.seoul.kk.dto.FeedPlayLandDto;
-import org.seoul.kk.dto.RegisterPlayLandDto;
+import org.seoul.kk.dto.playland.FeedPlayLandDto;
+import org.seoul.kk.dto.playland.RegisterPlayLandDto;
 import org.seoul.kk.entity.PlayLand;
 import org.seoul.kk.entity.Traveler;
 

@@ -1,11 +1,17 @@
 package org.seoul.kk.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "TB_REVIEW")
 public class Review {
@@ -14,12 +20,16 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "content")
-    private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "playland_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
+    private PlayLand playLand;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "play_land_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
-    private  PlayLand playLand;
+    @JoinColumn(name = "traveler_id", nullable = false, foreignKey = @ForeignKey(name = "none"))
+    private Traveler traveler;
+
+    @Column(name = "content")
+    private String content;
 
     @Column(name = "like_cnt")
     private Long likeCnt;
@@ -35,6 +45,7 @@ public class Review {
         LocalDateTime now = LocalDateTime.now();
         this.reviewAt = now;
         this.updatedAt = now;
+        this.likeCnt = 0L;
     }
 
     @PostUpdate

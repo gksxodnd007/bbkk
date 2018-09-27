@@ -1,6 +1,6 @@
 package org.seoul.kk.service;
 
-import org.seoul.kk.dto.RegisterTravelerDto;
+import org.seoul.kk.dto.traveler.RegisterTravelerDto;
 import org.seoul.kk.entity.Traveler;
 import org.seoul.kk.entity.constant.TravelProperty;
 import org.seoul.kk.exception.NotFoundTraveler;

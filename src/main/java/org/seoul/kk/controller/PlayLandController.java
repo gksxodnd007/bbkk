@@ -2,8 +2,8 @@ package org.seoul.kk.controller;
 
 import org.apache.commons.codec.binary.Base64;
 import org.seoul.kk.common.model.ApiResponseModel;
-import org.seoul.kk.dto.FeedPlayLandDto;
-import org.seoul.kk.dto.RegisterPlayLandDto;
+import org.seoul.kk.dto.playland.FeedPlayLandDto;
+import org.seoul.kk.dto.playland.RegisterPlayLandDto;
 import org.seoul.kk.entity.PlayLand;
 import org.seoul.kk.entity.Traveler;
 import org.seoul.kk.entity.constant.Season;
