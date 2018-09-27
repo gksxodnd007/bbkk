@@ -1,7 +1,6 @@
 package org.seoul.kk.repository;
 
 import com.querydsl.jpa.JPQLQuery;
-import lombok.extern.slf4j.Slf4j;
 import org.seoul.kk.entity.PlayLand;
 import org.seoul.kk.entity.QPlayLand;
 import org.seoul.kk.entity.QTraveler;
@@ -10,7 +9,6 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import java.util.List;
 
-@Slf4j
 public class PlayLandCustomRepositoryImpl extends QuerydslRepositorySupport implements PlayLandCustomRepository {
 
     private static final QPlayLand playLand = QPlayLand.playLand;
@@ -20,6 +18,7 @@ public class PlayLandCustomRepositoryImpl extends QuerydslRepositorySupport impl
         super(PlayLand.class);
     }
 
+    //TODO 좋아요 수가 같을 경우 정렬 기준을 추가해야합니다.
     @Override
     public List<PlayLand> findPlayLandBySeasonOrderByLikeCnt(Season season) {
         JPQLQuery<PlayLand> query = from(playLand)
@@ -31,6 +30,7 @@ public class PlayLandCustomRepositoryImpl extends QuerydslRepositorySupport impl
         return query.fetch();
     }
 
+    //TODO 좋아요 수가 같을 경우 정렬 기준을 추가해야합니다.
     @Override
     public List<PlayLand> findPlayLandOrderByLikeCntLimit(long limitSize) {
         JPQLQuery<PlayLand> query = from(playLand)
