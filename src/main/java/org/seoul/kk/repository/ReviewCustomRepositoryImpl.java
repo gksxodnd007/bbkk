@@ -30,6 +30,7 @@ public class ReviewCustomRepositoryImpl extends QuerydslRepositorySupport implem
                 .orderBy(review.likeCnt.desc())
                 .limit(size)
                 .select(Projections.constructor(ResReviewDto.class,
+                        review.id,
                         review.traveler.id,
                         review.traveler.nickname,
                         review.content,
@@ -48,6 +49,7 @@ public class ReviewCustomRepositoryImpl extends QuerydslRepositorySupport implem
                 .offset(cursor)
                 .limit(size)
                 .select(Projections.constructor(ResReviewDto.class,
+                        review.id,
                         review.traveler.id,
                         review.traveler.nickname,
                         review.content,

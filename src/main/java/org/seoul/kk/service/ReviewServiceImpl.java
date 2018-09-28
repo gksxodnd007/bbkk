@@ -5,9 +5,13 @@ import org.seoul.kk.dto.review.FeedReviewDto;
 import org.seoul.kk.dto.review.ReqReviewDto;
 import org.seoul.kk.dto.review.ResReviewDto;
 import org.seoul.kk.entity.Review;
+import org.seoul.kk.exception.ForbiddenException;
+import org.seoul.kk.exception.NotAcceptableException;
 import org.seoul.kk.exception.NotFoundPlayLand;
 import org.seoul.kk.exception.NotFoundTraveler;
-import org.seoul.kk.repository.*;
+import org.seoul.kk.repository.PlayLandRepository;
+import org.seoul.kk.repository.ReviewRepository;
+import org.seoul.kk.repository.TravelerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,5 +52,38 @@ public class ReviewServiceImpl implements ReviewService {
                 .popularReview(reviewRepository.findReviewOrderByLikeCntLimitByPlayLandId(3L, playLandId))
                 .review(reviews)
                 .build();
+    }
+
+    @Override
+    public FeedReviewDto reviewFeed(Long playLandId, Long cursor, Long size, Boolean rankFlag, Long rankDataSize) {
+        List<ResReviewDto> reviews = reviewRepository.findReviewOrderByCreatedAtFromCursorLimitByPlayLandId(cursor, size, playLandId);
+        long nextCursor = cursor;
+        long totalSize = reviewRepository.countByPlayLandId(playLandId);
+
+        if (nextCursor >= totalSize ) {
+            throw new NotAcceptableException();
+        }
+
+        if (reviews.size() == size && reviews.size() != totalSize) {
+            nextCursor += size;
+        }
+
+        FeedReviewDto response = FeedReviewDto.builder()
+                .nextCursor(nextCursor)
+                .totalSize(totalSize)
+                .review(reviews)
+                .build();
+
+        if (rankFlag) {
+            response.setPopularReview(reviewRepository.findReviewOrderByLikeCntLimitByPlayLandId(rankDataSize, playLandId));
+        }
+
+        return response;
+    }
+
+    @Override
+    public void deleteReview(Long reviewId, Long travelerId) {
+        Review review = reviewRepository.findByIdAndTravelerId(reviewId, travelerId).orElseThrow(ForbiddenException::new);
+        reviewRepository.deleteById(review.getId());
     }
 }

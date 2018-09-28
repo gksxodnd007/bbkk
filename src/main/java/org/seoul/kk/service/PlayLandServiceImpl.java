@@ -97,7 +97,7 @@ public class PlayLandServiceImpl implements PlayLandService {
         }
 
         if (playLands.size() == size && playLands.size() != totalSize ) {
-            nextCursor += playLands.size();
+            nextCursor += size;
         }
 
         FeedPlayLandDto response = FeedPlayLandDto.builder()
