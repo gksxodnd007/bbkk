@@ -8,6 +8,6 @@ public interface TravelerService {
 
     Traveler getTravelerById(Long id) throws NotFoundTraveler;
     Traveler getTravelerByUuid(String uuid) throws NotFoundTraveler;
-    Traveler registerTraveler(RegisterTravelerDto requestBody, String uuid) throws NotFoundTraveler;
+    Traveler registerTraveler(RegisterTravelerDto requestBody, String uuid);
 
 }
