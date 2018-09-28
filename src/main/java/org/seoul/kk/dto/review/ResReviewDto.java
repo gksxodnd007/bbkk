@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ResReviewDto {
 
+    private long id;
+
     @JsonProperty(value = "traveler_id")
     private long travelerId;
 
@@ -28,7 +30,8 @@ public class ResReviewDto {
     @JsonProperty(value = "review_at")
     private LocalDateTime reviewAt;
 
-    public ResReviewDto(long travelerId, String nickname, String content, long likeCnt, LocalDateTime reviewAt) {
+    public ResReviewDto(long id, long travelerId, String nickname, String content, long likeCnt, LocalDateTime reviewAt) {
+        this.id = id;
         this.travelerId = travelerId;
         this.nickname = nickname;
         this.content = content;
