@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PlayLandCustomRepository {
 
-    List<PlayLand> findPlayLandBySeasonOrderByLikeCnt(Season season);
-    List<PlayLand> findPlayLandOrderByLikeCntLimit(long limitSize);
+    List<PlayLand> findPlayLandBySeasonOrderByReviewCnt(Season season);
+    List<PlayLand> findPlayLandOrderByReviewCntLimit(long limitSize);
     List<PlayLand> findPlayLandOrderByCreatedAtFromCursorLimit(long cursor, long size);
 }

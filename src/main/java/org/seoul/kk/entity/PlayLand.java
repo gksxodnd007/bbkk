@@ -50,13 +50,13 @@ public class PlayLand {
     @Column(name = "position")
     private String position;
 
+    @JsonProperty(value = "review_cnt")
+    @Column(name = "review_cnt")
+    private Long reviewCnt;
+
     @JsonProperty(value = "image_url")
     @Column(name = "image_url")
     private String imageUrl;
-
-    @JsonProperty(value = "like_cnt")
-    @Column(name = "like_cnt")
-    private Long likeCnt;
 
     @JsonProperty(value = "created_at")
     @Column(name = "created_at")
@@ -66,12 +66,13 @@ public class PlayLand {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+
     @PrePersist
     public void onInitEntity() {
         LocalDateTime now = LocalDateTime.now();
         this.createdAt = now;
         this.updatedAt = now;
-        this.likeCnt = 0L;
+        this.reviewCnt = 0L;
     }
 
     @PostUpdate
