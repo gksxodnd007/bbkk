@@ -1,4 +1,4 @@
-package org.seoul.kk.dto.review;
+package org.seoul.kk.dto.bookmark;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
