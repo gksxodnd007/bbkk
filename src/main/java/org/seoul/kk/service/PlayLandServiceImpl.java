@@ -107,7 +107,7 @@ public class PlayLandServiceImpl implements PlayLandService {
                 .build();
 
         if (rankFlag) {
-            response.setPopularData(playLandRepository.findPlayLandOrderByLikeCntLimit(rankDataSize));
+            response.setPopularData(playLandRepository.findPlayLandOrderByReviewCntLimit(rankDataSize));
         }
 
         return response;
