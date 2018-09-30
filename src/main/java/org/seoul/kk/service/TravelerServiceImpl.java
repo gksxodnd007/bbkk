@@ -1,19 +1,12 @@
 package org.seoul.kk.service;
 
-import org.seoul.kk.dto.RandomNamingReturnDto;
-import org.seoul.kk.dto.RegisterNamingSourceDto;
-import org.seoul.kk.dto.RegisterTravelerDto;
+import org.seoul.kk.dto.traveler.RegisterTravelerDto;
 import org.seoul.kk.entity.Traveler;
-import org.seoul.kk.entity.TravelerNaming;
-import org.seoul.kk.entity.constant.Classification;
 import org.seoul.kk.entity.constant.TravelProperty;
 import org.seoul.kk.exception.NotFoundTraveler;
-import org.seoul.kk.repository.TravelerNamingRepository;
 import org.seoul.kk.repository.TravelerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
 
 @Service
 public class TravelerServiceImpl implements TravelerService {

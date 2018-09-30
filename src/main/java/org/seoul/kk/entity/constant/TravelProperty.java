@@ -2,9 +2,11 @@ package org.seoul.kk.entity.constant;
 
 public enum TravelProperty {
 
-    TRAVELER(1, "여행자"),
-    BEGGER(2, "꽃거지"),
-    PROGRAMMER(3, "코딩족");
+    ARTIST(1, "예술가"),
+    FOODFIGHTER(2, "푸드파이터"),
+    VISITOR(3, "관광객"),
+    EXPLORER(4, "탐험가"),
+    BEGGER(5, "알뜰방랑자");
 
     private String type;
     private int code;
