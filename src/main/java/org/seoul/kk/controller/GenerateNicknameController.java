@@ -19,6 +19,7 @@ public class GenerateNicknameController {
     private RandomNamingService randomNamingService;
 
     //TODO 더 이상 만들어질 닉네임이 없을 경우 무한루프가 발생합니다. 이를 수정해야합니다.
+    //TODO nickname history 테이블에 데이터를 저장하는 시점은 traveler를 등록할 경우입니다. 이를 수정해야합니다.
     @GetMapping(value = "/generate/nickname")
     public ApiResponseModel<ResRandomNicknameDto> generateNicknameTemp() {
 
