@@ -3,7 +3,6 @@ package org.seoul.kk.dto.traveler;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.seoul.kk.dto.RandomNamingSourceDto;
 
 import javax.validation.constraints.NotNull;
 
@@ -12,12 +11,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class RegisterTravelerDto {
 
-    @NotNull
-    private RandomNamingSourceDto randomNamingSourceDto;
-
-    @NotNull
+    @NotNull(message = "nickname is null")
     private String nickname;
-    @NotNull
-    private String property;
 
+    @NotNull(message = "property is null")
+    private String property;
 }

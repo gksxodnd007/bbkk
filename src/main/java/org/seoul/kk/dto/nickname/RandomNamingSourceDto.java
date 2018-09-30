@@ -1,4 +1,4 @@
-package org.seoul.kk.dto;
+package org.seoul.kk.dto.nickname;
 
 import lombok.Builder;
 import lombok.Data;
