@@ -32,8 +32,8 @@ public class TravelerController {
 
     @PostMapping(value = "/register")
     public ApiResponseModel<Traveler> registerTraveler(@RequestHeader("uuid") String uuid,
-                                     @Valid @RequestBody RegisterTravelerDto requestBody,
-                                     BindingResult bindingResult) {
+                                                       @Valid @RequestBody RegisterTravelerDto requestBody,
+                                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }

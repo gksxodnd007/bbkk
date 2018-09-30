@@ -11,8 +11,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class RegisterTravelerDto {
 
-    @NotNull
+    @NotNull(message = "nickname is null")
     private String nickname;
-    @NotNull
+
+    @NotNull(message = "property is null")
     private String property;
 }
