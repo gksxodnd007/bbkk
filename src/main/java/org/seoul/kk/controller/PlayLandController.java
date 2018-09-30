@@ -93,12 +93,26 @@ public class PlayLandController {
                                                           @RequestParam(value = "rank_flag", required = false, defaultValue = "true") Boolean rankFlag,
                                                           @RequestParam(value = "rank_data_size", required = false, defaultValue = "3") Long rankDataSize,
                                                           @RequestParam(value = "season", required = false) String season) {
-
-        return ApiResponseModel.<FeedPlayLandDto>builder()
+        ApiResponseModel<FeedPlayLandDto> response = ApiResponseModel.<FeedPlayLandDto>builder()
                 .code(HttpStatus.OK.value())
                 .msg(HttpStatus.OK.getReasonPhrase())
-                .result(playLandService.feedPlayLand(cursor, size, rankFlag, rankDataSize))
                 .build();
+
+        if (season != null) {
+            Season filterSeason;
+
+            try {
+                filterSeason = Season.valueOf(season);
+            } catch (IllegalArgumentException e) {
+                throw new BadRequestException("계절 enum 값의 형식이 맞지 않습니다.");
+            }
+
+            response.setResult(playLandService.feedPlayLandBySeason(cursor, size, rankFlag, rankDataSize, filterSeason));
+            return response;
+        } else {
+            response.setResult(playLandService.feedPlayLand(cursor, size, rankFlag, rankDataSize));
+            return response;
+        }
     }
 
     private boolean isBase64Encoded(String images) {

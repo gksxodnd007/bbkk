@@ -114,9 +114,30 @@ public class PlayLandServiceImpl implements PlayLandService {
     }
 
     @Override
-    public FeedPlayLandDto feedPlayLandBySeason(long cursor, long size, boolean rankFlag, long rankDataSize, String season) {
+    public FeedPlayLandDto feedPlayLandBySeason(long cursor, long size, boolean rankFlag, long rankDataSize, Season season) {
+        List<PlayLand> playLands = playLandRepository.findPlayLandBySeasonOrderByCreatedAtFromCursorLimit(cursor, size, season);
+        long totalSize = playLandRepository.countBySeason(season);
+        long nextCursor = cursor;
 
-        return null;
+        if (nextCursor >= totalSize) {
+            throw new NotAcceptableException();
+        }
+
+        if (playLands.size() == size && playLands.size() != totalSize ) {
+            nextCursor += size;
+        }
+
+        FeedPlayLandDto response = FeedPlayLandDto.builder()
+                .nextCursor(nextCursor)
+                .totalSize(totalSize)
+                .data(playLands)
+                .build();
+
+        if (rankFlag) {
+            response.setPopularData(playLandRepository.findPlayLandBySeasonOrderByReviewCntLimit(season, rankDataSize));
+        }
+
+        return response;
     }
 
     //TODO 파일 업로드 결과를 제어해야합니다.

@@ -20,12 +20,13 @@ public class PlayLandCustomRepositoryImpl extends QuerydslRepositorySupport impl
 
     //TODO 좋아요 수가 같을 경우 정렬 기준을 추가해야합니다.
     @Override
-    public List<PlayLand> findPlayLandBySeasonOrderByReviewCnt(Season season) {
+    public List<PlayLand> findPlayLandBySeasonOrderByReviewCntLimit(Season season, long limitSize) {
         JPQLQuery<PlayLand> query = from(playLand)
                 .innerJoin(playLand.traveler, traveler)
                 .fetchJoin()
                 .where(playLand.season.eq(season))
-                .orderBy(playLand.reviewCnt.desc());
+                .orderBy(playLand.reviewCnt.desc())
+                .limit(limitSize);
 
         return query.fetch();
     }
@@ -47,6 +48,19 @@ public class PlayLandCustomRepositoryImpl extends QuerydslRepositorySupport impl
         JPQLQuery<PlayLand> query = from(playLand)
                 .innerJoin(playLand.traveler, traveler)
                 .fetchJoin()
+                .orderBy(playLand.createdAt.desc())
+                .offset(cursor)
+                .limit(size);
+
+        return query.fetch();
+    }
+
+    @Override
+    public List<PlayLand> findPlayLandBySeasonOrderByCreatedAtFromCursorLimit(long cursor, long size, Season season) {
+        JPQLQuery<PlayLand> query = from(playLand)
+                .innerJoin(playLand.traveler, traveler)
+                .fetchJoin()
+                .where(playLand.season.eq(season))
                 .orderBy(playLand.createdAt.desc())
                 .offset(cursor)
                 .limit(size);
