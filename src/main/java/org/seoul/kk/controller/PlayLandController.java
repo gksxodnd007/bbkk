@@ -86,11 +86,13 @@ public class PlayLandController {
         response.setStatus(HttpStatus.NO_CONTENT.value());
     }
 
+    //TODO 필터기능을 추가해야합니다.
     @GetMapping(value = "/feed", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ApiResponseModel<FeedPlayLandDto> feedPlanLand(@RequestParam(value = "cursor", required = false, defaultValue = "0") Long cursor,
                                                           @RequestParam(value = "size", required = false, defaultValue = "10") Long size,
                                                           @RequestParam(value = "rank_flag", required = false, defaultValue = "true") Boolean rankFlag,
-                                                          @RequestParam(value = "rank_data_size", required = false, defaultValue = "3") Long rankDataSize) {
+                                                          @RequestParam(value = "rank_data_size", required = false, defaultValue = "3") Long rankDataSize,
+                                                          @RequestParam(value = "season", required = false) String season) {
 
         return ApiResponseModel.<FeedPlayLandDto>builder()
                 .code(HttpStatus.OK.value())

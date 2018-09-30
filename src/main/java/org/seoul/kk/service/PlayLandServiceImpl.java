@@ -113,6 +113,12 @@ public class PlayLandServiceImpl implements PlayLandService {
         return response;
     }
 
+    @Override
+    public FeedPlayLandDto feedPlayLandBySeason(long cursor, long size, boolean rankFlag, long rankDataSize, String season) {
+
+        return null;
+    }
+
     //TODO 파일 업로드 결과를 제어해야합니다.
     private List<String> uploadPlayLandImageS3(String base64EncodedData, String title, Season season, Long travelerId) {
         List<File> files = Lists.newArrayList();

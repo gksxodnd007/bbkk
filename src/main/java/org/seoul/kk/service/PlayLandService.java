@@ -11,4 +11,5 @@ public interface PlayLandService {
     PlayLand updatePlayLand(PlayLand requestBody);
     void deletePlayLand(Long id);
     FeedPlayLandDto feedPlayLand(long cursor, long size, boolean rankFlag, long rankDataSize);
+    FeedPlayLandDto feedPlayLandBySeason(long cursor, long size, boolean rankFlag, long rankDataSize, String season);
 }
